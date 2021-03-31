@@ -12,6 +12,7 @@ import (
 
 	"github.com/chirino/graphql"
 	"github.com/chirino/graphql/internal/example/starwars"
+	upgraphql "github.com/graph-gophers/graphql-go"
 )
 
 func TestEngineAPIServeHTTP(t *testing.T) {
@@ -38,7 +39,9 @@ func TestClientServeGraphQL(t *testing.T) {
 	s := httptest.NewServer(&httpgql.Handler{
 		ServeGraphQL: func(request *graphql.Request) *graphql.Response {
 			return &graphql.Response{
-				Data: json.RawMessage(`{"hello":"world"}`),
+				Response: &upgraphql.Response {
+					Data: json.RawMessage(`{"hello":"world"}`),
+				},
 			}
 		},
 	})

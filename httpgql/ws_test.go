@@ -7,6 +7,7 @@ import (
 
 	"github.com/chirino/graphql"
 	"github.com/chirino/graphql/httpgql"
+	upgraphql "github.com/graph-gophers/graphql-go"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -26,10 +27,14 @@ func TestClientServeGraphQLStream(t *testing.T) {
 		ServeGraphQLStream: func(request *graphql.Request) graphql.ResponseStream {
 			result := make(chan *graphql.Response, 2)
 			result <- &graphql.Response{
-				Data: json.RawMessage(`{"hello":"world"}`),
+				Response: &upgraphql.Response {
+					Data: json.RawMessage(`{"hello":"world"}`),
+				},
 			}
 			result <- &graphql.Response{
-				Data: json.RawMessage(`{"bye":"world"}`),
+				Response: &upgraphql.Response {
+					Data: json.RawMessage(`{"bye":"world"}`),
+				},
 			}
 			close(result)
 			return result

@@ -13,6 +13,7 @@ import (
 	"github.com/chirino/graphql/resolvers"
 	"github.com/chirino/graphql/schema"
 	"github.com/chirino/graphql/trace"
+	upgraphql "github.com/graph-gophers/graphql-go"
 )
 
 type Engine struct {
@@ -142,7 +143,9 @@ func (engine *Engine) ServeGraphQLStream(request *Request) ResponseStream {
 		TryCast:        engine.TryCast,
 		FireSubscriptionEventFunc: func(d json.RawMessage, e qerrors.ErrorList) {
 			responses <- &Response{
-				Data:   d,
+				Response: &upgraphql.Response {
+					Data:   d,
+				},
 				Errors: e,
 			}
 			traceResponse(e)
