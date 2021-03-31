@@ -1,16 +1,16 @@
 package graphql
 
 import (
-	"encoding/json"
 	"fmt"
 
 	"github.com/chirino/graphql/qerrors"
+	upgraphql "github.com/graph-gophers/graphql-go"
 )
 
 // Response represents a typical response of a GraphQL server. It may be encoded to JSON directly or
 // it may be further processed to a custom response type, for example to include custom error data.
 type Response struct {
-	Data       json.RawMessage        `json:"data,omitempty"`
+	*upgraphql.Response
 	Errors     ErrorList              `json:"errors,omitempty"`
 	Extensions interface{}            `json:"extensions,omitempty"`
 	Details    map[string]interface{} `json:"-"`
